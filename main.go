@@ -11,11 +11,13 @@ import (
 
 const page = `
 <body bgcolor="%s">
-<h1 style="background-color:white;">%s</h1>
+<h1 style="background-color:white;">(%d) %s</h1>
 </body>
 `
 
 var status = 200
+
+var counter = 0
 
 func main() {
 	fmt.Println("Hello World!")
@@ -36,9 +38,11 @@ func index(w http.ResponseWriter, r *http.Request) {
 		panic(errors.Wrap(err, "failed to get hostname"))
 	}
 
+	counter += 1
+
 	w.WriteHeader(status)
 	w.Header().Add("Content-Type", "text/html")
-	_, err = w.Write([]byte(fmt.Sprintf(page, name, name)))
+	_, err = w.Write([]byte(fmt.Sprintf(page, name, counter, name)))
 	if err != nil {
 		panic(err)
 	}
