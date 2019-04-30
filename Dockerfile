@@ -1,7 +1,7 @@
 FROM alpine
 
 RUN apk update \
-    && apk add ca-certificates \
+    && apk add ca-certificates curl \
     && update-ca-certificates \
     && wget https://github.com/jroslaniec/tapp/releases/download/v0.1.0/tapp \
     && chmod +x tapp
