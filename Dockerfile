@@ -1,9 +1,17 @@
+FROM golang:alpine AS base
+
+WORKDIR /app
+
+COPY . .
+
+RUN go mod download && go build -o tapp main.go
+
 FROM alpine
 
 RUN apk update \
-    && apk add ca-certificates curl \
-    && update-ca-certificates \
-    && wget https://github.com/jroslaniec/tapp/releases/download/v0.1.0/tapp \
-    && chmod +x tapp
+    && apk add ca-certificates \
+    && update-ca-certificates
+
+COPY --from=base /app/tapp tapp
 
 CMD ["./tapp"]

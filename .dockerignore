@@ -1,0 +1,7 @@
+# Block all by default
+*
+
+# ... and allow only
+!main.go
+!go.mod
+!go.sum
