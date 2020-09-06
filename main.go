@@ -12,6 +12,8 @@ import (
 const page = `
 <body bgcolor="%s">
 <h1 style="background-color:white;">(%d) %s</h1>
+<p>Remote addr: %s</p>
+<p>x-forwarded-for: %s</p>
 </body>
 `
 
@@ -42,7 +44,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(status)
 	w.Header().Add("Content-Type", "text/html")
-	_, err = w.Write([]byte(fmt.Sprintf(page, name, counter, name)))
+	_, err = w.Write([]byte(fmt.Sprintf(page, name, counter, name, r.RemoteAddr, r.Header.Get("x-forwarded-for"))))
 	if err != nil {
 		panic(err)
 	}
